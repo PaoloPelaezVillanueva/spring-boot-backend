@@ -1,5 +1,7 @@
 package com.backend.api.usuario.service;
 
+import com.backend.api.exception.RecursoDuplicadoException;
+import com.backend.api.exception.RecursoNoEncontradoException;
 import com.backend.api.usuario.dto.UsuarioRequest;
 import com.backend.api.usuario.dto.UsuarioResponse;
 import com.backend.api.usuario.entity.Usuario;
@@ -18,7 +20,7 @@ public class UsuarioService {
     public UsuarioResponse crear(UsuarioRequest request) {
 
         if (usuarioRepository.existsByEmail(request.getEmail())) {
-            throw new IllegalArgumentException("El email ya está registrado");
+            throw new RecursoDuplicadoException("El email ya está registrado");
         }
 
         Usuario usuario = Usuario.builder()
@@ -43,7 +45,7 @@ public class UsuarioService {
 
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() ->
-                        new IllegalArgumentException("Usuario no encontrado")
+                        new RecursoNoEncontradoException("Usuario no encontrado")
                 );
 
         return convertirAResponse(usuario);
@@ -52,7 +54,7 @@ public class UsuarioService {
 
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() ->
-                        new IllegalArgumentException("Usuario no encontrado")
+                        new RecursoNoEncontradoException("Usuario no encontrado")
                 );
 
         usuario.setNombre(request.getNombre());
@@ -67,7 +69,7 @@ public class UsuarioService {
     public void eliminar(Long id) {
 
         if (!usuarioRepository.existsById(id)) {
-            throw new IllegalArgumentException("Usuario no encontrado");
+            throw new RecursoNoEncontradoException("Usuario no encontrado");
         }
 
         usuarioRepository.deleteById(id);
