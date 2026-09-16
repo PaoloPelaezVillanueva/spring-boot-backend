@@ -57,6 +57,10 @@ public class UsuarioService {
                         new RecursoNoEncontradoException("Usuario no encontrado")
                 );
 
+        if (usuarioRepository.existsByEmailAndIdNot(request.getEmail(), id)) {
+            throw new RecursoDuplicadoException("El email ya está registrado");
+        }
+
         usuario.setNombre(request.getNombre());
         usuario.setEmail(request.getEmail());
         usuario.setPassword(request.getPassword());
