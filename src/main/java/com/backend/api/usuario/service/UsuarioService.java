@@ -48,6 +48,21 @@ public class UsuarioService {
 
         return convertirAResponse(usuario);
     }
+    public UsuarioResponse actualizar(Long id, UsuarioRequest request) {
+
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Usuario no encontrado")
+                );
+
+        usuario.setNombre(request.getNombre());
+        usuario.setEmail(request.getEmail());
+        usuario.setPassword(request.getPassword());
+
+        Usuario actualizado = usuarioRepository.save(usuario);
+
+        return convertirAResponse(actualizado);
+    }
 
     private UsuarioResponse convertirAResponse(Usuario usuario) {
         return new UsuarioResponse(

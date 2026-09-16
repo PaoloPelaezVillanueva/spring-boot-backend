@@ -40,4 +40,14 @@ public class UsuarioController {
 
         return ResponseEntity.ok(usuarioService.obtenerPorId(id));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UsuarioResponse> actualizar(
+            @PathVariable Long id,
+            @Valid @RequestBody UsuarioRequest request) {
+
+        return ResponseEntity.ok(
+                usuarioService.actualizar(id, request)
+        );
+    }
 }
