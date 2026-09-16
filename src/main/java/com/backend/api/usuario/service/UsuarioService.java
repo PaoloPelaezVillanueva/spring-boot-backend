@@ -64,6 +64,15 @@ public class UsuarioService {
         return convertirAResponse(actualizado);
     }
 
+    public void eliminar(Long id) {
+
+        if (!usuarioRepository.existsById(id)) {
+            throw new IllegalArgumentException("Usuario no encontrado");
+        }
+
+        usuarioRepository.deleteById(id);
+    }
+
     private UsuarioResponse convertirAResponse(Usuario usuario) {
         return new UsuarioResponse(
                 usuario.getId(),

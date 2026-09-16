@@ -50,4 +50,11 @@ public class UsuarioController {
                 usuarioService.actualizar(id, request)
         );
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+
+        usuarioService.eliminar(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }
